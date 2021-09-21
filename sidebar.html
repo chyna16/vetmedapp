@@ -1,0 +1,162 @@
+<sidebar>
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href='#/welcome'>
+            <!-- <div class="sidebar-brand-icon">
+            <i class="fa fa-graduation-cap"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">App Review</div> -->
+            <img src="img/liu-logo-w.png" alt="LIU">
+        </a>
+        
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            App Review
+        </div>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- todo: make this repeater -->
+        <li class="nav-item" onclick="{()=>menuClicked('welcome')}">
+                <a class="nav-link clickable">
+                 <i class="fa fa-home {getActiveMenuClass('welcome')}"></i>
+                    <span>Home</span></a>
+        </li>
+        <li class="nav-item" onclick="{()=>menuClicked('academic')}" if="{props.showCriteriaMenus}">
+                <a class="nav-link clickable">
+                    <i class="fa fa-graduation-cap {getActiveMenuClass('academic')}"></i>
+                    <span>Academic</span>
+                    <span class="badge badge-pill badge-light ml-1 text-muted smaller-badge">{state.progress['academic']}%</span>
+                </a>
+        </li>
+        <li class="nav-item" onclick="{()=>menuClicked('non-academic')}"  if="{props.showCriteriaMenus}">
+            <a class="nav-link clickable">
+                <i class="fa fa-book {getActiveMenuClass('non-academic')}"></i>
+                <span>Non-Academic</span>
+                <span class="badge badge-pill badge-light ml-1 text-muted smaller-badge">{state.progress['non-academic']}%</span>
+            </a>
+        </li>
+        <li class="nav-item" onclick="{()=>menuClicked('interview')}"  if="{props.showCriteriaMenus}">
+            <a class="nav-link clickable">
+                <i class="fa fa-user {getActiveMenuClass('interview')}"></i>
+                <span>Interview</span>
+                <span class="badge badge-pill badge-light ml-1 text-muted smaller-badge">{state.progress['interview']}%</span>
+            </a>
+        </li>
+        <li if="{state.user && state.user.role === 'A'}" class="nav-item" onclick="{()=>menuClicked('report')}">
+            <a class="nav-link clickable">
+            <i class="fa fa-inbox {getActiveMenuClass('report')}"></i>
+                <span>Report</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Nav Item - Logout -->
+        <li class="nav-item" onclick="{logoutClicked}">
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="text-center d-none d-md-inline" onclick="{toggleClicked}">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+    <style>
+    </style>
+    <script>
+        export default {
+            state : {
+                page: 'welcome',
+                user: {},
+                app:{},
+                subscriptionUser: null,
+                subscriptionPage: null,
+                subscriptionReview: null,
+                progress:{
+                    "academic":0,
+                    "non-academic":0,
+                    "interview":0
+                }
+            },
+            onBeforeMount(props, state) {
+                this.state.page = props.page;
+            },
+            onMounted(props, state) {
+                const sub = this.query.select('user').subscribe(user => { 
+                    this.update({user:user});
+                });
+                this.state.subscriptionUser = sub;
+                const subPage = this.query.select('page').subscribe(page => { 
+                    this.update({page:page});
+                });
+                this.state.subscriptionPage = subPage;
+                const subReview = this.query.select('review').subscribe(review => { 
+                    if (this.service.criteriaCatalog.length > 0){
+                        this.update({progress:this.getProgress(review)});
+                    }
+                });
+                this.state.subscriptionReview = subReview;
+
+                const subApp = this.query.select('app').subscribe(app=> { 
+                    // Copy all properties
+                    Object.assign(this.state.app, app);
+                    this.update();
+                });
+                this.state.subscriptionApp = subApp;
+            },
+            onUnmounted(props,state){
+                this.state.subscriptionUser.unsubscribe();
+                this.state.subscriptionPage.unsubscribe();
+                this.state.subscriptionReview.unsubscribe();
+                this.state.subscriptionApp.unsubscribe();
+            },
+            menuClicked(pageName){
+                this.router.navigate('/'+pageName);
+                this.update();
+            },
+            logoutClicked(){
+                if (confirm('Are you sure to logout?')){
+                    this.service.logout();
+                }
+            },
+            toggleClicked(){
+                $("body").toggleClass("sidebar-toggled");
+                $(".sidebar").toggleClass("toggled");
+            },
+            getActiveMenuClass(pageName){
+                if (pageName == this.state.page){
+                    return 'active-menu';
+                }
+                return '';
+            },
+            getProgress(review){
+                let academicprogress=0;
+                if(this.state.app.OverallGPA != "" && this.state.app.OverallGPA != null ){
+                    academicprogress += 50;
+                }
+                if(this.state.app.PrerequisiteGPA != "" && this.state.app.PrerequisiteGPA != null){
+                    academicprogress += 50;
+                }
+
+                var progress = {
+                    "academic":academicprogress,
+                    "non-academic":this.getProgressPerCategory(review,'VETMED-Non-Academic'),
+                    "interview":this.getProgressPerCategory(review,'VETMED-Interview')
+                };
+                return progress;
+            },
+            getProgressPerCategory(review,rubricName){
+                const catArr = this.service.criteriaCatalog.filter(cat=>cat.RubricName===rubricName).map(cat=>cat.name);
+                var filled = Object.keys(review).filter(key=>catArr.includes(key) && review[key]).length;
+                return Math.floor(100.0 * filled / catArr.length);
+            }
+        }
+    </script>
+</sidebar>

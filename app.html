@@ -1,0 +1,140 @@
+<app>
+<!-- Page Wrapper -->
+<login if="{!state.isLoggedIn}"></login>
+<div id="wrapper" if="{state.isLoggedIn}">
+    <sidebar page="{state.page}" on-change="{onPageChanged}" show-criteria-menus="{state.app.InqID}"></sidebar>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <topbar></topbar>
+
+        <!-- Begin Page Content -->
+        <form onchange="{formChanged}">
+          <alert></alert>
+          <div class="container-fluid">
+            
+            <div if="{false}">
+                <div class="toast" data-autohide="false" style="opacity:1;max-width:100%;">
+                    <div class="toast-header">
+                        <strong class="liu-blue-text mr-auto ">One Moment</strong>
+                        <small class="text-muted">Un-Authorized Access</small>
+                    </div>
+                    <div class="toast-body text-center">
+                        Your review team is not assigned to this application
+                        <hr>
+                        If you believe you have received this in error, please check with your App Review Administrators before contacting IT
+                        
+                    </div>
+                </div>
+            </div>
+            <div if="{true}" is="{state.page}" student="{state.app}"></div>
+          </div>
+        </form>
+        <!-- End of Page Content -->
+
+        <div class="toast" data-autohide="true" data-delay="3000" data-animation="true">
+            <div class="toast-header">
+                <strong class="liu-blue-text mr-auto ">Content Saved!</strong>
+                <small class="text-muted"></small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body">
+                Your input has been saved
+            </div>
+        </div>
+
+      </div>
+      <!-- End of Main Content -->
+
+      <bottombar></bottombar>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+  <!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+<script>
+
+export default {
+  state: {
+    isLoggedIn: false,
+    user:{},
+    app: {
+        InqID: null
+    },
+    review: {},
+    subs: {},
+    page:''
+  }, 
+  onBeforeMount(props, state) {
+  },
+  async onMounted(props,state){
+    if (this.config.mode === 'debug'){
+        await this.service.dummyLogin();
+    }
+    this.state.subs.user = this.query.select('user').subscribe(user=>{
+      if(user){
+        this.update({user:user});
+      }
+    });
+    this.state.subs.page = this.query.select('page').subscribe(val => {
+      this.update({page:'page-' + val})
+    });
+    this.state.subs.isLoggedIn = this.query.select('isLoggedIn').subscribe(val => { 
+      if (!val){
+        this.state.app = {InqID:null};
+        this.state.page = '';
+      }
+      else {
+        this.state.page = 'page-welcome';
+      }
+      this.update({isLoggedIn:val});
+    });
+    this.state.subs.app = this.query.select('app').subscribe(app=> { 
+      // Copy all properties
+      Object.assign(this.state.app, app);
+      if (app && app.InqID){
+         this.service.initReviewData(app.InqID, this.store.storeValue.user.uname);
+         this.service.getComments(app.InqID);
+      }
+      this.update();
+    });
+    this.state.subs.review = this.query.select('review').subscribe(review=> { 
+      if (review.ReviewID){
+        this.update({review:review});
+      }
+    });
+  },
+  async onUnmounted(){ 
+    Object.keys(this.state.subs).forEach(key=>{
+      this.state.subs[key].unsubscribe();
+    })
+  },
+  async formChanged(e) {
+    // TODO: need to store reviewId somewhere 
+    //console.log(e.target.dataset.sync);
+    if (e.target.dataset.disableSync != "true"){
+      await this.service.saveReviewData(this.store.storeValue.review.ReviewID,e.target.name, e.target.value);
+      this.update();
+    }
+  }
+}
+</script>
+<style>
+    sidebar{
+      background-color:#69b3e7;
+    }
+    login {
+      width:100%;
+    }
+  </style>
+</app>

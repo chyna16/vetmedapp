@@ -1,0 +1,68 @@
+<notes>
+    <!-- Global notes section -->
+    <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold">
+                Notes
+                </h6>
+            </div>
+    
+         <!-- Begining of Rater notes Questions Body -->
+    
+            <div class="card-body">
+                <div class="form-group">
+                    <textarea class="form-control" id="add-comment-text" rows="3" data-disable-sync="true" onkeyup="{commentChanged}"></textarea>
+               </div>  
+               <button class="btn btn-primary" onclick="{addCommentClicked}" disabled="{state.isDisabled}">
+                    <strong>Add Comment</strong>
+                </button>
+               <label id="notes">
+                 
+               </label>
+               <!-- Mock List design example -->
+               <hr>
+               <div each="{item in state.comments}" class="alert alert-secondary text-muted" role="alert">
+                    {item.Data} <br><div class="text-right text-muted font-italic small">- {item.Username} ({formatDate(item.CreateDate)})</div>
+               </div>
+           </div> 
+       <!-- End of Rater notes Body -->
+       <style></style>
+       <script>
+            export default {
+                state : {
+                    comments:[],
+                    subscription: null,
+                    isDisabled: true
+                },
+                async onMounted(props, state) {
+                    const sub = this.query.select('comments').subscribe(comments=> { 
+                        this.update({comments:comments});
+                    });
+                    this.state.subscription = sub;
+                },
+                onUnmounted(props,state){
+                    this.state.subscription.unsubscribe();
+                },
+                addCommentClicked(e){
+                    const comment = this.$('#add-comment-text').value;
+                    const reviewId = this.store.storeValue.review.ReviewID;
+                    const inqId = this.store.storeValue.app.InqID;
+                    this.service.addComment(reviewId,inqId,comment);
+                    this.$("#add-comment-text").value = '';
+                    this.state.isDisabled = true;
+                    e.preventDefault();
+                    $('.toast').toast('show');
+                },
+                commentChanged(e){
+                    this.update({isDisabled: e.target.value.length > 0 ? false : true});
+                    if (e.keyCode === 13){
+                        this.addCommentClicked();
+                    }
+                    e.preventDefault();
+                },
+                formatDate(dateStr){
+                    return (new Date(dateStr)).toLocaleString();
+                }
+            }
+       </script>
+</notes>

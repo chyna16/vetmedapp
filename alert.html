@@ -1,0 +1,45 @@
+<alert>
+    <div id="alert-message" class="container-fluid" if="{state.message}">
+        <div id="inner-alert-message" class="alert alert-danger" role="alert">
+            {state.message}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="{dismissAlert}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <style>
+        #alert-message {
+            position: fixed;
+            top: 10;
+            left: 0;
+            width: 100%;
+            z-index:10000;
+            opacity:0.8;
+        }
+        #inner-alert-message {
+            margin: 0 auto;
+        }
+    </style>
+    <script>
+        export default {
+            state: {
+                message: '',
+                subscription: null
+            },
+            onMounted(props, state) {
+                const sub = this.query.select('lastError').subscribe(val => {
+                    this.update({
+                        message: val
+                    });
+                });
+                this.state.subscription = sub;
+            },
+            onUnmounted(props,state){
+                this.state.subscription.unsubscribe();
+            },
+            dismissAlert() {
+                this.service.logError('');
+            }
+        }
+    </script>
+</alert>

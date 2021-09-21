@@ -1,0 +1,103 @@
+<team-work>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold">What the student sees on the door</h6>
+    </div>
+    <div class="card-body">
+      <p>
+          A discussion of how the student could set the group up to increase participation without being confrontational
+          may include delegating specific tasks to specific members…but what if that doesn’t work? How well can the
+          candidate solve this problem?
+      </p>
+      <div class="form-group mt-4">
+        <div class="row">
+          <div class="col-sm">
+            <label for="team-work-wellness">Wellness/Resilience/Empathy</label>
+            <select class="form-control" name="Interview-Team-Work-Resiliency-Empathy">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <label for="team-work-Problem-Solving">Problem solving/Critical Thinking<br> </label>
+            <select class="form-control" name="Interview-Team-Work-Problem-Solving">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <label for="team-work-communication">Communication</label>
+            <select class="form-control" name="Interview-Team-Work-Communication">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card shadow mb-4">
+      <a href="#teamworkprobingQuestion" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+          aria-expanded="true" aria-controls="teamworkprobingQuestion">
+      <h6 class="m-0 font-weight-bold">Probing Questions</h6>
+  </div>
+    <div class="collapse" id="teamworkprobingQuestion">
+      <div class="card-body">
+      <p>
+        You have been assigned to work with 3 of your classmates in a team exercise where you must work collaboratively
+        to finish an assignment for a grade. One of your classmates (the loud one) tends to talk over and monopolizes
+        the conversation while another (the laid back one) is not contributing at all and actually seems to be making
+        excuses to not show up for group meetings.
+      </p>
+      <p>
+        Issues to consider:
+      </p>
+      <ol>
+        <li>
+          <p>
+            Could you set up the group so that everyone makes contributions without being confrontational?
+          </p>
+        </li>
+        <li>
+          <p>
+            Tell me about a similar situation you have experienced and how you handled it?
+          </p>
+        </li>
+      </ol>
+      <!-- End of Academic Challeges Body -->
+    </div>
+  </div>
+</div>
+<div class="card shadow mb-4">
+    <a href="#team-workprobingQuestion" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+        aria-expanded="true" aria-controls="team-workprobingQuestion">
+    <h6 class="m-0 font-weight-bold">Followup questions</h6>
+</div>
+  <div class="collapse" id="team-workprobingQuestion">
+    <div class="card-body">
+      <ol>
+        <li><p>The loud student becomes belligerent and angry. How would you handle that?</p></li>
+      </ol>
+    </div>
+  </div>
+  <script>
+    export default class extends BaseTabComponent {
+      onMounted(props, state) {
+        super.onMounted(props, state);
+      }
+    }
+  </script>
+
+</team-work>

@@ -1,0 +1,121 @@
+<financial-cost>
+  <form>
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold">What the student sees on the door</h6>
+      </div>
+     <div class="card-body">
+        <p>
+            Student debt is a major concern for the veterinary profession.  What are some potential solutions for the profession as a whole? What can you personally do? 
+        </p>
+        <!--Selection Menu-->
+        <div class="form-group mt-4">
+          <div class="row">
+            <div class="col-sm">
+              <label for="costFinancial">Financial awareness</label>
+              <select class="form-control" name="Interview-Cost-Financial-Awareness">
+                <option value="">--Select--</option>
+                <option value="2">Poor</option>
+                <option value="4">Borderline</option>
+                <option value="6">Average</option>
+                <option value="8">Good</option>
+                <option value="10">Excellent</option>
+              </select>
+            </div>
+            <div class="col-sm">
+              <label for="costProblemsloving">Problem solving/ Critical thinking</label>
+              <select class="form-control" name="Interview-Cost-Problem-Solve">
+                <option value="">--Select--</option>
+                <option value="2">Poor</option>
+                <option value="4">Borderline</option>
+                <option value="6">Average</option>
+                <option value="8">Good</option>
+                <option value="10">Excellent</option>
+              </select>
+            </div>
+
+            <div class="col-sm">
+              <label for="costCommunication">Communication Skills</label>
+              <select class="form-control" name="Interview-Cost-Communication">
+                <option value="">--Select--</option>
+                <option value="2">Poor</option>
+                <option value="4">Borderline</option>
+                <option value="6">Average</option>
+                <option value="8">Good</option>
+                <option value="10">Excellent</option>
+              </select>
+            </div>
+          </div>
+        </div>
+     </div>
+    </div>
+    <!-- Collapsable Card Example -->
+    <div class="card shadow mb-4">
+        <a href="#costbackgroundInfo" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+            aria-expanded="true" aria-controls="costbackgroundInfo">
+          <h6 class="m-0 font-weight-bold">Background Information</h6>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse" id="costbackgroundInfo">
+          <div class="card-body">
+            <p>
+              Articles detailing cost dilemma for additional information at
+              <a class="liu-blue-text" href="https://www.vet.cornell.edu/about-us/news-publications/publications/evets-connect/college-news/how-heal-veterinary-student-debt"
+             target="_blank"><strong>Article One</strong></a>
+              and
+              <a class="liu-blue-text" href="https://www.vet.cornell.edu/about-us/news-publications/publications/evets-connect/college-news/how-heal-veterinary-student-debt"
+                target="_blank"><strong>Article Two</strong></a>.
+            </p>
+            <p>
+              You mentioned that reducing the cost of education by ________ is one way. Can you think of other ways to
+              reduce the debt?
+            </p>
+            <ul>
+              <li>
+                Increasing scholarship endowments
+              </li>
+              <li>
+                Enhancing student financial literacy
+              </li>
+              <li>
+                Streamlining the veterinary school curriculum
+              </li>
+              <li>
+                Advocating to governments
+              </li>
+              <li>
+                Minimizing the cost of borrowing
+              </li>
+  
+            </ul>
+            <p>
+              Additional Resources:
+            </p>
+            <ul>
+              <li><a class="liu-blue-text"
+                  href="https://atwork.avma.org/2016/12/08/fixing-the-debt-your-profession-is-working-to-ease-the-burden/"
+                  target="_blank"><strong>AVMA</strong></a></li>
+              <li><a class="liu-blue-text"
+                  href="http://www.aavmc.org/students-applicants-and-advisors/exploring-the-cost-of-a-veterinary-medical-education.aspx"
+                  target="_blank"><strong>Medical Education</strong></a></li>
+              <li><a class="liu-blue-text" href="https://www.avma.org/About/SAVMA/StudentFinancialResources/Pages/default.aspx"
+                  target="_blank"><strong>Student Financial Resources</strong></a></li>
+              <li><a class="liu-blue-text" href="https://www.vin.com/studentdebtcenter/." target="_blank"><strong>Vin.com</strong></a></li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </form>
+
+
+  <!-- <button class="btn btn-primary" type="submit">Submit form</button> -->
+  </div>
+  <script>
+    export default class extends BaseTabComponent {
+      onMounted(props, state) {
+        super.onMounted(props, state);
+      }
+    }
+  </script>
+
+</financial-cost>

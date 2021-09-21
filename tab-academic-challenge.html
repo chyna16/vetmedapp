@@ -1,0 +1,105 @@
+<tab-academic-challenge>
+  
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold"> 
+         What the student sees on the door 
+      </h6>
+    </div>
+      <!-- Beginning of Academic Challenges Body -->
+    <div class="card-body">
+      Your roommate in veterinary school failed her first anatomy test. She was very upset as this is the first failing grade she had ever received. She was determined
+      to bring up her grade on the next exam so she studied every night after school from the time she got home
+      until 1:00am including the weekends. The harder she studied, the more stressed out she became. Despite all of
+      this hard work, she did poorly on the next exam as well. By the end of the first semester she is in danger of
+      failing out. How do you advise her?
+  <!-- End of Academic Challeges Body -->
+    <div class="form-group mt-4">
+      <div class="row">
+        <div class="col-sm">
+          <label for="academic-challenge-empathyform">Wellness/Resilience/Empathy</label>
+          <select class="form-control" name="Interview-Challenge-Resilience">
+          <option value="">--Select--</option>
+          <option value="2">Poor</option>
+          <option value="4">Borderline</option>
+          <option value="6">Average</option>
+          <option value="8">Good</option>
+          <option value="10">Excellent</option>
+          </select>
+        </div>
+
+        <div class="col-sm">
+          <label for="academic-challenge-problemsloving">Problem Solving/Critical Thinking</label>
+          <select class="form-control" name="Interview-Challenge-Problem">
+            <option value="">--Select--</option>
+            <option value="2">Poor</option>
+            <option value="4">Borderline</option>
+            <option value="6">Average</option>
+            <option value="8">Good</option>
+            <option value="10">Excellent</option>
+          </select>
+        </div>
+
+        <div class="col-sm">
+
+          <label for="academic-challenge-communication">Communication</label>
+          <select class="form-control" name="Interview-Challenge-Communication">
+            <option value="">--Select--</option>
+            <option value="2">Poor</option>
+            <option value="4">Borderline</option>
+            <option value="6">Average</option>
+            <option value="8">Good</option>
+            <option value="10">Excellent</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow mb-4">
+    <a href="#academicprobingQuestion" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+        aria-expanded="true" aria-controls="academicprobingQuestion">
+    <h6 class="m-0 font-weight-bold">Probing Questions</h6>
+    </div>
+  <div class="collapse" id="academicprobingQuestion">
+    <div class="card-body">
+      <ol>
+        <li><p>What do you think of her study habits?</p></li>
+        <li><p>Do you think studying longer always means you learn more?</p></li>
+        <li><p>If the student has not already acknowledged it, when do you think your roommate should seek professional help?</p></li>
+        <li><p>What are some avenues they might pursue for professional help?</p></li>
+      </ol>
+    </div>
+  </div>
+    <!-- End of Probing Questions Body -->
+ 
+
+
+  <div class="card shadow mb-4">
+      <a href="#academicRater" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+          aria-expanded="true" aria-controls="academicRater">
+          <h6 class="m-0 font-weight-bold">Rater Sheet </h6>
+      </a>
+          <div class="collapse" id="academicRater">
+              <div class="card-body">
+      This is a common scenario for students with academic difficulty. These students often lack appropriate
+      study skills and coping skills. Follow-up information may include
+
+      The roommate does not sleep very well or eat well and does not get any exercise. Often, studying longer
+      does not mean studying better and the harder they try, the deeper the hole gets.This is a common scenario for
+      students with academic difficulty. These students often lack appropriate
+      study skills and coping skills. Follow-up information may include: The roommate does not sleep very well or eat well and does not get any exercise. Often, studying longer
+      does not mean studying better and the harder they try, the deeper the hole gets.
+    
+    </div>
+  </div>  
+  </div>
+  <script>
+      export default class extends BaseTabComponent {
+        onMounted(props,state){
+          super.onMounted(props,state);
+        }
+     }
+  </script>
+</tab-academic-challenge>

@@ -1,0 +1,327 @@
+<student>
+	<div class="modal fade" id="preInterviewAcademic" tabindex="-1" role="dialog" aria-labelledby="preInterviewTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="preInterviewTitle">Pre-Interview</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card shadow mb-4 mt-4 col-md-12">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="academic_dataTable" width="100%"
+									cellspacing="0">
+									<thead>
+										<tr>
+											<th>Academic Factor</th>
+											<th>GPA</th>
+											<th>Points</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Overall GPA</td>
+											<td>{state.student.OverallGPA != null ? parseFloat(state.student.OverallGPA).toFixed(2) : 'GPA Missing' }</td>
+											<td>{state.rubric.OverallGPA }</td>
+										</tr>
+										<tr>
+											<td>Pre-requisite GPA</td>
+											<td>{state.student.PrerequisiteGPA != null ? parseFloat(state.student.PrerequisiteGPA).toFixed(2) : 'Equivalencies Missing' }</td>
+											<td>{state.rubric.PrerequisiteGPA}</td>
+										</tr>
+										<tr>
+											<td>GRE Verbal Reasoning**</td>
+											<td>{state.student.GREVerbal != null  ? state.student.GREVerbal : 'NA' }</td>
+											<td>{state.rubric.GREVerbal}</td>
+										</tr>
+										<tr>
+											<td>GRE Quantitative Reasoning**</td>
+											<td>{state.student.GREQuantitative != null  ? state.student.GREQuantitative : 'NA' }</td>
+											<td>{state.rubric.GREQuantitative}</td>
+										</tr>
+										<tr>
+											<td>GRE Analytical score**</td>
+											<td>{state.student.GREAnalytical != null  ? state.student.GREAnalytical : 'NA' }</td>
+											<td>{state.rubric.GREAnalytical}</td>
+										</tr>
+										<tr>
+											<td>Academic Factor Subtotal</td>
+											<td></td>
+											<td>{state.totals.score} / {state.totals.max} = {((state.totals.score/state.totals.max)*100).toFixed(2)}% </td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="StudentBio" tabindex="-1" role="dialog" aria-labelledby="StudentBio"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="StudentBio">Student Bio</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="card shadow mb-4 mt-4 col-md-12">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="StudentDash" width="100%"
+									cellspacing="0">
+									<thead>
+										<tr>
+											<th>Gender</th>
+											<th>Ethnicity</th>
+											<th>College</th>
+											<th>Age</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{state.student.Gender}</td>
+											<td>{getEthnicIdentity()}</td>
+											<td>{state.student.College1Name}</td>
+											<td>{state.student.age}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="border-left-liu card shadow h-100 py-2">
+		<div class="card-body form-row">
+			<div class="container">
+				<div class="row" style="position:relative">
+					<div class="col-sm">
+						<p class="liu-blue-text text-xs font-weight-bold text-uppercase mb-1">Student Bio
+							<i class="fas fa-info-circle clickable" data-toggle="modal"
+								data-target="#StudentBio"></i>
+								<span class="badge badge-primary ml-2 p-1">{state.student.isUSCAN ? 'National' : 'International' }</span>
+							</p>
+						<div class="h5 mb-0 font-weight-bold text-gray-800 academic-value">
+							{state.student.FirstName} {state.student.LastName}
+						</div>
+					</div>
+					<div class="col-sm">
+						<div class="liu-blue-text text-xs font-weight-bold text-uppercase mb-1">Student ID</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800 academic-value">{ (state.student.EMPLID == null || state.student.EMPLID == "" ? "Awaiting ID" : state.student.EMPLID) }</div>
+					</div>
+					<div class="col-sm">
+						<div class="liu-blue-text text-xs font-weight-bold  text-uppercase mb-1">Confirmation #</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800 academic-value">{state.student.InqID}</div>
+					</div>
+					<div class="col-sm">
+						<p class="liu-blue-text text-xs font-weight-bold text-uppercase mb-1">Academic Rubric 
+							<i
+								class="fas fa-info-circle clickable" data-toggle="modal"
+								data-target="#preInterviewAcademic"></i></p>
+								
+						<div class="h5 mb-0 font-weight-bold text-gray-800 academic-value">
+							{state.totals.score} / {state.totals.max} = <span class="ml-2"> {((state.totals.score/state.totals.max)*100).toFixed(2)}% </span>
+						</div>
+					</div>
+					<div class="col-sm">
+						<p class="liu-blue-text text-xs font-weight-bold text-uppercase mb-1">Flag Student
+						<div class="h5 mb-0 font-weight-bold text-gray-800 academic-value">
+							<div class="input-group">
+								<div class="input-group">
+									<button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{state.student.marked && state.student.marked!=''?state.student.marked.slice(0,1).toUpperCase()+state.student.marked.slice(1,state.student.marked.length):'Mark Record'}</button>
+									<div class="dropdown-menu">
+									<a class="dropdown-item text-muted" href="#" onclick="{(e)=>markApplication(e,'')}">Remove Flag</a>
+									<a class="dropdown-item {state.student.marked=='discrepancy' ? 'active' : ''}" href="#" onclick="{(e)=>markApplication(e,'discrepancy')}">Discrepancy</a>
+									<a class="dropdown-item {state.student.marked=='interesting' ? 'active' : ''}" href="#" onclick="{(e)=>markApplication(e,'interesting')}">Interesting</a>
+									<a class="dropdown-item {state.student.marked=='outstanding' ? 'active' : ''}" href="#" onclick="{(e)=>markApplication(e,'outstanding')}">Outstanding</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+		</div>
+	</div>
+	<style>
+		.academic-value {
+			/*position: absolute !important;*/
+			bottom: 0 !important;
+		}
+		.text-xs{
+			font-size:11px !important;
+		}
+	</style>
+
+	<script>
+		export default {
+			state: {
+				student: {
+					FirstName: "",
+					LastName: "",
+					EMPLID: "",
+					InqID: "",
+					Gender:"",
+					Ethinicty:"",
+					College1Name:"",
+					DOB:"",
+					age:"",
+					AppReviewStatus:""
+				},
+				rubric:{},
+				conversions: {
+					GPA:[
+						{min:0,conversion:0},
+						{min:2.8,conversion:15},
+						{min:3,conversion:20},
+						{min:3.45,conversion:25},
+						{min:4,conversion:30}
+					],
+					GREVerbal:[
+						{min:0,conversion:0},
+						{min:142,conversion:1},
+						{min:146,conversion:2},
+						{min:149,conversion:3},
+						{min:152,conversion:4},
+						{min:155,conversion:5}
+					], 
+					GREQuantitative:[
+						{min:0,conversion:0},
+						{min:143,conversion:1},
+						{min:145,conversion:2},
+						{min:148,conversion:3},
+						{min:152,conversion:4},
+						{min:157,conversion:5}
+					],
+					GREAnalytical:[
+						{min:0,conversion:0},
+						{min:2.7,conversion:2},
+						{min:2.9,conversion:4},
+						{min:3.3,conversion:6},
+						{min:3.7,conversion:8},
+						{min:4,conversion:10}
+					]
+				},
+				totals:{
+					score:0,
+					max:0
+				}
+			},
+			convert(conversion,score){
+				if(score=="" || score==null || this.state.student.isUSCAN==false ){
+					return "NA";
+				}
+				score=parseFloat(score);
+				let conversionScale = this.state.conversions[conversion];
+				let curBandMin = -1;
+				let curScore = null;
+				conversionScale.forEach((band)=>{
+					curScore = score >= band.min && curBandMin < band.min ? band.conversion : curScore;
+				}); 
+				return curScore;
+			},
+			max(conversion){
+				let max=0;
+				let conversionScale = this.state.conversions[conversion];
+				conversionScale.forEach((band)=>{
+					max = max < band.conversion ? band.conversion : max;
+				});
+				return max;
+			},
+			
+			onBeforeMount(props,state){
+				this.bindAppData(props,state,false);
+			},
+			onBeforeUpdate(props, state) {
+				this.bindAppData(props,state);
+			},
+			bindAppData(props,state,update=true){
+				Object.assign(this.state.student, props.student);
+				this.state.student.age = this.age(this.state.student.DOB);
+				this.state.student.marked = props.student.AppReviewStatus;
+				this.state.rubric={
+					OverallGPA:this.convert("GPA",props.student.OverallGPA),
+					PrerequisiteGPA:this.convert("GPA",props.student.PrerequisiteGPA),
+					GREVerbal:this.convert("GREVerbal",props.student.GREVerbal),
+					GREQuantitative:this.convert("GREQuantitative",props.student.GREQuantitative),
+					GREAnalytical:this.convert("GREAnalytical",props.student.GREAnalytical)
+				};
+
+				this.state.totals={
+					score:0,
+					max:0,
+				};
+				let rubric = this.state.rubric;
+				let rubrics = {
+					"OverallGPA":"GPA",
+					"PrerequisiteGPA":"GPA",
+					"GREVerbal":"GREVerbal",
+					"GREQuantitative":"GREQuantitative",
+					"GREAnalytical":"GREAnalytical"
+				};
+				let optional = ["GREVerbal","GREQuantitative","GREAnalytical"];
+				let score = 0;
+				let max = 0;
+				Object.keys(rubrics).forEach((name)=>{
+					if(this.state.rubric[name] != "NA" && this.state.rubric[name] != null && this.state.rubric[name] != "" ){
+						score += this.state.rubric[name];
+						max += this.max(rubrics[name]);
+					}
+					else{
+						max += optional.indexOf(name) > -1 ? 0 : this.max(rubrics[name]) ;
+					}
+				});
+				this.state.totals.score = score;
+				this.state.totals.max = max;
+			},
+			age(dob){
+				var today = new Date();
+				var birthDate = new Date(dob);
+				var age = today.getFullYear() - birthDate.getFullYear();
+				var m = today.getMonth() - birthDate.getMonth();
+				if (this.state. m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+					age--;
+				}
+				return age;
+				
+			},
+			getEthnicIdentity (){
+				let identities = []
+				this.state.student.IpedRace1 == "T"? identities.push("American Indian/ Alaskian Native"): 0;
+				this.state.student.IpedRace2 == "U"? identities.push("Asian"): 0;
+				this.state.student.IpedRace3 == "Q"? identities.push("African American"): 0;
+				this.state.student.IpedRace4 == "V"? identities.push("Native Hawaiian/Pacific Islander"): 0;
+				this.state.student.IpedRace5 == "W"? identities.push("White"): 0;
+				return identities.join(",");
+			},
+			async markApplication(e,value){
+				e.stopPropagation();
+				let success = await this.service.flagAppData(this.state.student.InqID,value);
+				this.state.student.marked = success ? value : "" ;
+				success ? setTimeout(async ()=>{ 
+					await this.service.loadAppData(this.state.student.InqID);
+					this.update();
+				}): 0 ;
+				this.update();
+			}
+		}
+	</script>
+</student>

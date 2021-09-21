@@ -1,0 +1,130 @@
+<panel-applications>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold">Applications</h6>
+        </div>
+        <div class="card-body default-height">
+            <div if="{state.list.length == 0}" class="fa-3x ml-1">
+                <h3>Please wait...
+                    <i class="fas fa-spinner fa-spin"></i>
+                </h3>
+            </div>
+            <span if="{false}" class="mb-4">review assigned to you - <h5 style="display:inline;color:firebrick">*</h5></span>
+            <div class="list-group mt-3">
+                <a if="{state.user}" each="{app in state.list}" class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1 clickable list-name" onclick="{()=>itemClicked(app)}">{app.FirstName} {app.LastName} <span if="{false && state.user.VetGroupId == app.VetGroupId}" style="color:firebrick"> *</span> </h5>
+                        <small>{formatDate(app.SubmittedDate)}</small>
+                    </div>
+                    <div class="row">
+                        <div class="col-9">
+                            <small if="{app.Reviewers}">Reviewed by {app.Reviewers}</small>
+                            <small if="{!app.Reviewers}">Not yet reviewed</small>
+                        </div>
+                        <div class="col-3 text-right">
+                            <small class="ml-1 mt-1 text-nowrap">#{app.InqId}</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr class="my-1 p-0">
+                            <span class="badge badge-sm badge-primary p-1">{app.isUSCAN ? 'National' : 'International' }</span>
+                            <span if="{app.AppReviewStatus != null &&  app.AppReviewStatus != ''}" class="badge badge-sm badge-primary ml-2 p-1">{ app.AppReviewStatus.slice(0,1).toUpperCase() + app.AppReviewStatus.slice(1,app.AppReviewStatus.length) }</span>
+                        </div>
+                    </div>
+                    <div class="row mt-2" if="{false && state.user && state.user.role === 'A'}">
+                        <div class="col-3">
+                            <label class="mt-1">Assignee</label>
+                        </div>
+                        <div class="col-9">
+                            <select class="form-control" 
+                                    name="assign{app.InqId}" 
+                                    data-disable-sync="true" 
+                                    data-inqid="{app.InqId}"
+                                    onchange="{assigneeChanged}">
+                            <option value="">--Select--</option>
+                            <option value="{item.VetGroupID}" each="{item in state.groups}" selected="{item.VetGroupID == app.VetGroupId}">{item.VetGroupID}: {item.Name}</option>
+                            </select>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .default-height {
+            min-height:400px!important;
+        }
+        .list-name:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        export default {
+            state:{
+                list:[],
+                user:{},
+                subscriptionNewApps: null,
+                subscriptionVetGroups: null,
+                subscriptionUser: null,
+                loading:false,
+                groups:[]
+            },
+            async onMounted(props,state){
+                await this.service.getNewApplications(1000);
+
+                const sub = this.query.select('newApps').subscribe((inNewApps)=>{
+                    this.state.list = inNewApps;
+                    this.update();
+                });
+                this.state.subscriptionNewApps = sub;
+
+                const subVetGroups = this.query.select('lookup').subscribe((lookup)=>{
+                    var dict = {};
+                    lookup.VetGroups.forEach((item)=>{
+                        if (dict[item.VetGroupID]) {
+                            dict[item.VetGroupID] += ', ' + item.Name;
+                        }
+                        else {
+                            dict[item.VetGroupID] = item.Name;
+                        }
+                    });
+                    var arr = [];
+                    Object.keys(dict).forEach((key)=>{
+                        arr.push({"VetGroupID":key,"Name":dict[key]});
+                    });
+                    this.state.groups = arr;
+                    this.update();
+                });
+                this.state.subscriptionVetGroups = subVetGroups;
+
+
+                const subUser = this.query.select('user').subscribe(user => { 
+                    this.update({user:user});
+                });
+                this.state.subscriptionUser = subUser;
+            },
+            formatDate(dateStr){
+                if (!dateStr){
+                    return 'Not Submitted';
+                }
+                var dt = new Date(dateStr);
+                return dt.toLocaleDateString();
+            },
+            onUnmounted(props,state){
+                this.state.subscriptionNewApps.unsubscribe();
+                this.state.subscriptionVetGroups.unsubscribe();
+                this.state.subscriptionUser.unsubscribe();
+            },
+            itemClicked(app){
+                this.service.loadAppData(app.InqId);
+                this.service.clearSearchInput();
+                this.router.navigate('/academic');
+            },
+            assigneeChanged(e){
+                console.log('assigneeChanged','VetGroupID:' + e.target.value, 'InqID:' + e.target.dataset.inqid);
+                this.service.saveAssignee(parseInt(e.target.value),e.target.dataset.inqid);
+            }
+        }
+    </script>
+</panel-applications>

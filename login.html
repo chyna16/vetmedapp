@@ -1,0 +1,158 @@
+<login>
+<div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+        <div id="login" class="col-xl-10 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
+                        <div class="col-lg-4 bg-gradient-primary text-center">
+                            <div id="seal">
+                                <img src="img/seal-w.png" class="img-fluid seal-margin" alt="LIU">
+                            </div>
+                            <div id="logo">
+                                <a href="http://www.liu.edu" target="_blank"><img src="img/liu-logo-w.png" alt="LIU"></a>
+                            </div>
+                            <div id="version">
+                                <label class="version">Ver. 1.3.0</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-2">College of Veterinary Medicine</h1>
+                                    <br />
+                                </div>
+                                <form class="user">
+                                    <div class="form-group">
+                                        <input type="text" 
+                                            id="username"
+                                            autocomplete="off"
+                                            autocorrect="off" 
+                                            autocapitalize="none"
+                                            class="form-control form-control-user"
+                                            placeholder="Username"
+                                            onkeyup="{inputKeyup}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" 
+                                            id="password"
+                                            class="form-control form-control-user"
+                                            placeholder="Password"
+                                            onkeyup="{inputKeyup}">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-user btn-block" 
+                                            onclick="{loginClicked}" 
+                                            disabled="{state.processing}">
+                                        <strong>Login
+                                            <i class="{state.processing ? 'fas fa-spinner fa-spin' : ''}"></i>
+                                        </strong>
+                                    </button>
+                                </form>
+                                <hr>
+                                <label class="text-xs font-weight-bold text-danger text-uppercase mb-1">{state.message}</label>
+                                <div id="copyright" class="text-center">
+                                    <label>&copy; 2019 Long Island University</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <style>
+            #login{
+                margin-top:8%;
+            }
+            .seal-margin{
+                margin-top:38%;
+                margin-bottom: 10%;
+            }
+            .version{
+                margin-top:28%;
+                color:lightgrey;
+                font-size:10px;
+            }
+            .text-xs{
+                font-size:11px !important;
+            }
+            #copyright{
+                color:lightgrey;
+                font-size:10px;
+            }
+            .bg-gradient-primary {
+                background-color:var(--liu-blue);
+                background-image: -webkit-gradient(linear,left top,left bottom,color-stop(50%,var(--liu-blue)),to(rgba(83, 145, 189))) !important;
+                background-image: linear-gradient(180deg,var(--liu-blue) 50%,rgb(83, 145, 189) 100%) !important;
+                background-size: cover;
+            }
+            @media only screen and (max-width : 991px) {
+                .seal-margin{
+                    margin-top:5%;
+                    margin-bottom: 5%;
+                }
+                #logo{
+                    display:none;
+                }
+                #version{
+                    display:none;
+                }                
+            }
+        </style>
+        <script>
+        export default {
+            state : {
+                message:'',
+                processing:false
+            },
+            onBeforeMount(props,state){
+            },
+            onMounted(props, state) {
+                this.query.select('lastLoginError').subscribe(val => { 
+                    this.update({message:val});
+                });
+            },
+            inputKeyup(e){
+                e.preventDefault();
+                if (e.keyCode === 13){
+                    this.doLogin();
+                }
+            },
+            loginClicked(e){
+                e.preventDefault();
+                this.doLogin();
+            },
+            async doLogin(){
+                this.update({processing:true});
+                // ref and two way binding is dead. this is good thing
+                let username = this.$('#username').value;
+                let password = this.$('#password').value;
+                if (username && password){
+                    const res = await this.service.login(username,password);
+                    if (res.data.Status == 'ok'){
+                        this.router.navigate('/welcome');
+                        return;
+                    }
+                    else {
+                        // otherwise, catch on lastLogin Error
+                        this.update({processing:false});
+                    }
+                }
+                else {
+                    this.update({message:'Enter Username and Password', processing:false});
+                }
+                return true;
+            }
+        }
+    </script>
+</login>

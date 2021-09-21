@@ -1,0 +1,84 @@
+<black-box>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold">What the student sees on the door</h6>
+    </div>
+    <div class="card-body">
+      <p>
+        You are working at a local business over the summer.After
+        working with your supervisor for several weeks he begins making negative
+        comments about other worker’s skills or abilities.You are
+        bothered by the comments.What would you do?Do you
+        believe you should do something about it? Please discuss your
+        rational.There is no right or wrong answer.
+      </p>
+      <!--Selection Menu-->
+      <div class="form-group mt-4">
+        <div class="row">
+          <div class="col-sm">
+            <label for="blackbox_communicationTable">Communication</label>
+            <select class="form-control" name="Interview-Blackbox-Communication">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <label for="blackbox_problemTable">Problem solving/Critical thinking</label>
+            <select class="form-control" name="Interview-Blackbox-Problem">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+
+          <div class="col-sm">
+            <label for="blackbox_moralTable">Moral/ethical reasoning</label>
+            <select class="form-control" name="Interview-Blackbox-Moral">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="card shadow mb-4">
+    <a href="#black-boxprobingQuestion" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+      aria-expanded="true" aria-controls="black-boxprobingQuestion">
+      <h6 class="m-0 font-weight-bold">Probing Questions</h6>
+  </div>
+  <div class="collapse" id="black-boxprobingQuestion">
+    <div class="card-body">
+      <ol>
+        <li>
+          <p>Would you speak to your supervisor about your concerns?</p>
+        </li>
+        <li>
+          <p>Would you speak to the business owner?</p>
+        </li>
+        <li>
+          <p>Would you speak to the other employees about your concerns? If so, what would you say?</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <script>
+    export default class extends BaseTabComponent {
+      onMounted(props, state) {
+        super.onMounted(props, state);
+      }
+    }
+  </script>
+</black-box>

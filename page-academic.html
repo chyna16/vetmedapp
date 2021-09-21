@@ -1,0 +1,303 @@
+<page-academic>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Academic Criteria</h1>
+    </div>
+    
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <student student={state.student}></student>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold">
+                        Submitted Documents
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div if="{ !docsExist() }" class="w-100 text-center text-muted">
+                        <h5>Documents not yet loaded <i class="fas fa-empty-set"></i></h5>
+                    </div>
+                    <a href="{service.config.baseUrl+'file/'+doc.DocumentID+'?id='+service.currentUser.uname+'&token='+service.currentUser.token}" target="_blank" each="{doc in state.docs}">
+                        <div class="card text-center d-inline-block m-2" style="width:120px;">
+                            <div class="card-header bg-white p-1">
+                                { doc.UploadName.replace("fuEssay","Essay ").toUpperCase().slice(0,16) + (doc.UploadName.replace("fuEssay","Essay ").length>16?"...":"") }
+                            </div>
+                            <div class="card-body p-1">
+                                <span class="display-4">
+                                    <i class="fas fa-file-alt clickable" ></i>
+                                </span>
+                                <br>
+                                {fileType(doc.FileType)}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <a href="#equivalenciesSubmitted" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="equivalenciesSubmitted">
+                    <h6 class="m-0 font-weight-bold">
+                        Equivalency Submitted
+                    </h6>
+                </a>
+                <div class="card-body" id="equivalenciesSubmitted">
+                    <div if="{ !equivalenciesExist() }" class="w-100 text-center text-muted">
+                        <h5>Equivalencies not yet submitted <i class="fas fa-empty-set"></i></h5>
+                    </div>
+                    <div if="{ equivalenciesExist() }">
+                        <span class="text-muted">* - self reported by applicant</span>
+                        <table class="table table-sm table-bordered mt-2">
+                            <thead>
+                                <tr>
+                                    <th class="liu-blue-text" scope="col">Prerequisite</th>
+                                    <th class="liu-blue-text" scope="col">School*</th>
+                                    <th class="liu-blue-text" scope="col">Course*</th>
+                                    <th class="liu-blue-text" scope="col">Credits*</th>
+                                    <th class="liu-blue-text" scope="col">Grade*</th>
+                                    <th class="liu-blue-text" scope="col">Complete*</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr each="{equivalency in state.equivalencies}">
+                                    <td>{equivalency.Prerequisite}</td>
+                                    <td>{equivalency.School}</td>
+                                    <td>{equivalency.Course}</td>
+                                    <td>{equivalency.Credits}</td>
+                                    <td>{equivalency.Grade}</td>
+                                    <td>{humanReadableDate(equivalency.Date)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <a href="#equivalenciesReviewed" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+                aria-expanded="true" aria-controls="equivalenciesReviewed">
+                    <h6 class="m-0 font-weight-bold">
+                        Equivalency Reviewed
+                    </h6>
+                </a>
+                <div id="equivalenciesReviewed" class="card-body collapse">
+                    <div if="{ !equivalenciesExist() }" class="w-100 text-center text-muted">
+                        <h5>Equivalencies not yet submitted <i class="fas fa-empty-set"></i></h5>
+                    </div>
+                    <div if="{ equivalenciesExist() }">
+                        <span class="text-muted"><b>**</b> - reserved for modifications by reviewer</span><br>
+                        <span class="text-muted"><span class="liu-blue-bg d-inline-block" style="width:25px;height:25px;"></span> - Course equivalency overrided by a reviewer</span>
+                        <table class="table table-sm table-bordered mt-2">
+                            <thead>
+                                <tr>
+                                    <th class="liu-blue-text" scope="col">Prerequisite</th>
+                                    <th class="liu-blue-text" colspan="2" scope="col">School**</th>
+                                    <th class="liu-blue-text" colspan="2" scope="col">Course**</th>
+                                    <th class="liu-blue-text" colspan="2" scope="col">Complete**</th>
+                                </tr>
+                            </thead>
+                            <tbody each="{equivalency in state.equivalencies}" id="{equivalency.PS_Value}" >
+                                <tr>
+                                    <td class="border-0">{equivalency.Prerequisite}</td>
+                                    <td class="border-0" colspan="2"><input id="School" class="form-control form-control-sm w-100" type="text" placeholder="enter school name" /></td>
+                                    <td class="border-0" colspan="2"><input id="Course" class="form-control form-control-sm w-100" type="text" placeholder="enter course name" /></td>
+                                    <td class="border-0" colspan="2"><input id="Date" class="form-control form-control-sm" type="date" /></td>
+                                </tr>
+                                <tr>
+                                    <th class="border-0 align-middle text-center" colspan="1">Confirmed Credits**</th>
+                                    <td class="border-0" colspan="2"><input id="Credits" class="form-control form-control-sm w-100" type="Number" placeholder="0.00" /></td>
+                                    <th class="border-0 align-middle text-center" colspan="1">Confirmed Grade**</th>
+                                    <td class="border-0" colspan="2"><input id="Grade" class="form-control form-control-sm w-100" type="Number" placeholder="0.00" /></td>
+                                    <td class="border-0"><button onclick="{()=>requivUpdate(equivalency.PS_Value)}" type="button" class="btn btn-sm btn-primary">Save</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <notes></notes>
+        </div>
+    </div>  
+    <script>
+        export default {
+            state:{
+                student:{},
+                docs:[],
+                equivalencies:[],
+                reviewedEquivalencies:{},
+                eventListeners:[]
+            },
+            onBeforeMount(props, state) {
+                this.bindAppData(props,state); //build app data
+            },
+            onBeforeUpdate(props,state){
+                this.requivUnbind(); //cleanup listeners
+                this.bindAppData(props,state); //build app data
+            },
+            onMounted(props,state){
+                this.requivBind(props); //build listeners
+            },
+            onUpdated(props,state){
+                this.requivBind(props); //build listeners
+            },
+            onBeforeUnmount(){
+                this.requivUnbind(); //cleanup listeners
+            },
+            bindAppData(props, state){
+                if(props.student.Files!==undefined){
+                    props.student.Files = props.student.Files.map((doc)=>{
+                        doc.UploadName = doc.UploadName.replace("fuEssay","Essay ").toUpperCase();
+                        return doc;
+                    });
+                    props.student.Files.sort((a,b)=>{ 
+                        return a.UploadName.localeCompare(b.UploadName);
+                    });
+                }      
+                try{
+                    this.state.student = props.student;
+                    this.state.docs = props.student.Files;
+                    this.state.equivalencies = props.student.Equivalencies;
+                    props.student.ReviewedEquivalencies.forEach((reviewedEquivalency)=>{
+                        this.state.reviewedEquivalencies[reviewedEquivalency.PS_Value]=reviewedEquivalency;
+                    });
+                }
+                catch(e){
+                    
+                }
+            },
+            equivalenciesExist(){
+
+                if(this.state.equivalencies === undefined){
+                    return false;
+                }
+                if( this.state.equivalencies.length===0 ){
+                    return false;
+                }
+                return true;
+            },
+            requivBind(props){
+                var self = this;
+                if(props.student.ReviewedEquivalencies!==undefined && props.student.Equivalencies.length > 0){
+                    let equivalencyKeys = Object.keys(props.student.Equivalencies[0]);
+                    props.student.Equivalencies.forEach((equivalency)=>{
+                        equivalencyKeys.forEach((key)=>{
+                            let outer = document.querySelector("#"+equivalency.PS_Value);
+                            if(outer){
+                                let el = outer.querySelector("#"+key);
+                                if(el){
+                                    let overridden = equivalency.PS_Value in this.state.reviewedEquivalencies;
+                                    let val = overridden ? this.state.reviewedEquivalencies[equivalency.PS_Value][key] : equivalency[key];
+                                    val = key == "Date" ? new Date(val).toISOString().slice(0,10) : val;
+                                    el.value  = val;
+                                    let listener=(e)=>{ 
+                                        e.stopPropagation();                                 
+                                        if( !(equivalency.PS_Value in self.state.reviewedEquivalencies) ){
+                                            self.state.reviewedEquivalencies[equivalency.PS_Value] = JSON.parse(JSON.stringify(equivalency));
+                                        }
+                                        else{
+                                            self.state.reviewedEquivalencies[equivalency.PS_Value] = JSON.parse(JSON.stringify(self.state.reviewedEquivalencies[equivalency.PS_Value]))
+                                        }
+                                        self.state.reviewedEquivalencies[equivalency.PS_Value][key] = key == "Date" ? new Date(el.value).toISOString() : el.value
+                                        
+                                    }
+                                    let listenerInfo = {"selector":"#"+equivalency.PS_Value,"el":el,"event":"change","listener":listener};
+                                    this.state.eventListeners.push(listenerInfo);
+                                    if(overridden){
+                                        document.querySelector(listenerInfo.selector).classList.add("liu-blue-bg");
+                                        document.querySelector(listenerInfo.selector).classList.add("text-light");
+                                    } 
+
+                                    el.addEventListener("change",listener)
+                                }
+                            }
+                        })
+                    })
+                }
+            },
+            requivUnbind(){
+                try{
+                    this.state.eventListeners.forEach((listenerBind)=>{
+                        listenerBind.el.removeEventListener(listenerBind.event,listenerBind.listener);
+                        document.querySelector(listenerBind.selector).classList.remove("liu-blue-bg");
+                        document.querySelector(listenerBind.selector).classList.remove("text-light");
+                    })
+                }
+                catch(e){
+                    console.log(e);
+                }
+            },
+            async requivUpdate(keyvalue){
+                var result = await this.service.saveReviewedEquivalency(
+                    this.state.student.InqID,
+                    this.state.reviewedEquivalencies[keyvalue]
+                );
+                let prefix = "The following changes have been recorded:\n\n"
+                let updatestr = Object.keys(result.Updated).length + " course equivalency reviews have been updated \n";
+                let newstr = Object.keys(result.New).length + " course equivalency reviews have been created\n";
+                let suffix = "\nscoring conversions should update in the scoring calculations above momentarily."
+                alert(
+                    prefix+updatestr+newstr+suffix
+                );
+            },
+            docsExist(){
+                if( this.state.docs === undefined ){
+                    return false;
+                }
+                if( this.state.docs.length==0){
+                    return false;
+                }
+                return true;
+            },
+            fileType(type){
+                if(
+                    type=="application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                    type=="application/vnd.oasis.opendocument.text" ||
+                    type=="application/vnd.ms-excel" ||
+                    type=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                    type=="application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                    type=="application/octet-stream" ||
+                    type=="application/msword"
+                ){
+                    return "Document";
+                }
+                else if(
+                    type=="application/pdf"
+                ){
+                    return "PDF";
+                }
+                else if(
+                    type=="image/jpeg" ||
+                    type=="image/gif" ||
+                    type=="image/png"
+                ){
+                    return "Image"
+                }
+                
+            },
+            humanReadableDate(datestr){
+                let date = new Date(datestr);
+                return date.getMonth() + "/" + 
+                date.getDate() + "/" + 
+                date.getFullYear();
+            }
+        }
+    </script>
+</page-academic>

@@ -1,0 +1,159 @@
+<barking-dog>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold">What the student sees on the door</h6>
+    </div>
+    <div class="card-body">
+      A young family is considering having their 2 year-old FS Beagle be
+      debarked. It is not illegal in NY but many people believe debarking is
+      unethical because it is a surgery that has no benefit to the dog. However,
+      the owners live in a rent-controlled apartment building in Manhattan and
+      the building manager is threatening eviction based on other tenant
+      complaints. They do not want to give up the dog, the children are very
+      attached. What do you think about this situation? Please be advised that
+      there is no right or wrong answer.
+      <div class="form-group mt-4">
+        <div class="row">
+          <div class="col-sm">
+            <label for="barkingmoralSelection">Moral ethical reasoning</label>
+            <select class="form-control" name="Interview-Barking-Dog-Ethic-Reasoning">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <label for="barkingProblemSelection">Problem Solving/Critical Thinking<br></label>
+            <select class="form-control" name="Interview-Barking-Dog-Problem-Solve">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <label for="barkingDogKnowledge">Knowledge of the profession<br></label>
+            <select class="form-control" name="Interview-Barking-Dog-Knowledge">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+          <div class="col-sm">
+            <label for="barkingcommunicationSelection">Communication</label>
+            <select class="form-control" name="Interview-Barking-Dog-Communication">
+              <option value="">--Select--</option>
+              <option value="2">Poor</option>
+              <option value="4">Borderline</option>
+              <option value="6">Average</option>
+              <option value="8">Good</option>
+              <option value="10">Excellent</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion (removed follow up questions for barking dog)
+    <a href="#followUpQuestions" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+      aria-expanded="true" aria-controls="followUpQuestions">
+      <h6 class="m-0 font-weight-bold">Follow-up Questions
+      </h6>
+    </a>
+    <div class="collapse" id="followUpQuestions">
+      <div class="card-body">
+        <ol>
+          <li>
+            <p>
+              Do you think there are any other solutions be sides surgery that the owners might consider? (Behavioral
+              modification, training)
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Are there any conditions in which you could justify the procedure?
+            </p>
+          </li>
+          <li>
+            <p>
+              Do you feel the same way about other controversial procedures such as ear cropping, declawing cats, tail
+              docking?
+            </p>
+          </li>
+          <li>
+            <p>
+              What about castrating male dogs and doing a complete OHE on female dogs? There are some that believe these
+              procedures are often unnecessary and if done too early cause bone growth abnormalities and predispose to
+              some
+              cancers.
+            </p>
+          </li>
+        </ol>
+        <a class="liu-blue-text" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0055937" target="_blank"><strong>Additional
+          Information</strong></a>
+      </div>
+    </div>
+  -->
+  </div>
+  <div class="card shadow mb-4">
+    <a href="#briefprocedureDesc" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+      aria-expanded="true" aria-controls="briefprocedureDesc">
+      <h6 class="m-0 font-weight-bold">Brief Description Of Procedure
+      </h6>
+    </a>
+    <div class="collapse" id="briefprocedureDesc">
+      <div class="card-body">
+        <!-- Needs vocab to be revised -->
+        Jan 1, 2019 JAVMA news reaffirmed the existing policy on canine devocalization. There is broad opposition to the
+        procedure however exceptions are recognized. The current policy reads as follows.
+        “Canine devocalization should on be performed by qualified, licensed veterinarians as a final alternative to
+        euthanasia after behavioral modification to correct excessive vocalization has failed and after potential
+        complications have been discussed with the owner”
+      </div>
+    </div>
+  </div>
+  <div class="card shadow mb-4">
+    <a href="#barkingProblem" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button"
+      aria-expanded="true" aria-controls="barkingProblem">
+      <h6 class="m-0 font-weight-bold">Problem Questions
+      </h6>
+    </a>
+    <div class="collapse" id="barkingProblem">
+      <div class="card-body">
+        <!-- Updated Questions -->
+        <ol>
+          <li>Do you think there are any other solutions besides surgery that the owners might consider? (Behavioral
+            modification, training)</li>
+          <li>Are there any conditions in which you could justify the procedure?</li>
+          <li>Do you feel the same way about other controversial procedures such as ear cropping, declawing cats, tail
+            docking?</li>
+          <li>What about castrating male dogs and doing a complete OHE on female dogs? There are some that believe these
+            procedures are often unnecessary and if done too early cause bone growth abnormalities and predispose to
+            some cancers.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <button class="btn btn-primary" type="submit">Submit form</button> -->
+  </div>
+  <script>
+    export default class extends BaseTabComponent {
+      onMounted(props, state) {
+        super.onMounted(props, state);
+      }
+    }
+  </script>
+
+</barking-dog>

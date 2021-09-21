@@ -1,0 +1,122 @@
+/* LIU Specific Theme Override for Bootstrap 4 */
+/* Original reference: https://webapps3.liu.edu/scripts/liu-theme.css */
+
+/* Theme Variables */
+:root {
+	--liu-blue:#69B3E7;
+	--liu-white:#fff;
+	--liu-gold:#FFC72C;
+}
+
+/* Global */
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+td {
+    width: 25%;
+}
+
+h5, h6 {
+    color:var(--liu-blue);
+}
+
+.fa-2x {
+    font-size: 1em;
+    margin-left: 5px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+/* Basic Bootstrap Components */
+.btn-primary {
+    background-color:var(--liu-blue);
+    border-color:var(--liu-blue);
+}
+.badge-primary {
+    background-color:var(--liu-blue);
+    border-color:var(--liu-blue);
+}
+
+.btn-primary:hover {
+    background-color:var(--liu-blue);
+    border-color:var(--liu-blue);
+    filter:brightness(110%);
+}
+.btn-primary:disabled{
+    background-color:var(--liu-blue);
+    border-color:var(--liu-blue); 
+}
+
+.nav-link {
+    color:var(--liu-blue); 
+}
+
+.nav-tabs .nav-link.active {
+    color:var(--liu-gold);
+}
+
+.navbar {
+    background-color:var(--liu-blue);
+    color:var(--liu-white);
+}
+
+.toast.show {
+    position: fixed;
+    top: 95px;
+    right: 20px;
+}
+
+/* SB Admin 2 - Sidebar */
+.sidebar-light .nav-item .nav-link {
+    color:var(--liu-white);
+}
+
+.sidebar-light .sidebar-heading {
+    color:var(--liu-white);
+}
+
+.active-menu {
+    color:var(--liu-gold)!important;
+}
+
+.active-menu i {
+    color:var(--liu-gold)!important;
+}
+
+.smaller-badge{
+    font-size:x-small!important;
+    padding-bottom:1px;
+}
+
+/* Other Utility Classes */
+
+.liu-blue-bg{
+    background-color:var(--liu-blue);
+}
+
+.liu-blue-text{
+    color:var(--liu-blue);
+}
+
+
+.input-group-text{
+  border:0px;
+  margin-left:-4px;
+  border-radius: 0px 5px 5px 0px!important;
+  z-index:10;
+}
+
+.border-left-liu{
+  border-left: .5rem solid var(--liu-blue);
+}
+.img-displayed {
+    width: 100%;
+    margin-bottom: 20px;
+    height: auto;
+}
+
+

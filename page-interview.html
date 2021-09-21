@@ -1,0 +1,89 @@
+<page-interview>
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Interview Criteria</h1>
+        
+    </div>
+
+   
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <student student={state.student}></student>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <ul class="nav nav-tabs" id="tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab-academic-challenge" data-toggle="tab" href="#academic-challenge"
+                        role="tab" aria-controls="academic-challenge" aria-selected="false">Academic Challenge</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-knowledge" data-toggle="tab" href="#knowledge" role="tab"
+                        aria-controls="knowledge" aria-selected="false">Knowledge </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-barking-dog" data-toggle="tab" href="#barking-dog" role="tab"
+                        aria-controls="barking-dog" aria-selected="false"> Barking Dog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-boy-dog" data-toggle="tab" href="#boy-dog" role="tab"
+                        aria-controls="boy-dog" aria-selected="false"> Boy & His Dog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-financial" data-toggle="tab" href="#financial-cost" role="tab"
+                        aria-controls="financial-cost" aria-selected="false"> Cost </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-team-work" data-toggle="tab" href="#team-work" role="tab"
+                        aria-controls="team-work" aria-selected="false"> Team Work </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-black-box" data-toggle="tab" href="#black-box" role="tab"
+                        aria-controls="black-box" aria-selected="false">Challenging Supervisor</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="tab">
+                <div class="tab-pane fade show active" id="academic-challenge" role="tabpanel"
+                    aria-labelledby="tab academic-challenge">
+                    <tab-academic-challenge></tab-academic-challenge>
+                </div>
+                <div class="tab-pane fade" id="knowledge" role="tabpanel" aria-labelledby="tab-knowledge">
+                    <tab-knowledge></tab-knowledge>
+                </div>
+
+                <div class="tab-pane fade" id="barking-dog" role="tabpanel" aria-labelledby="tab-barking-dog">
+                    <barking-dog></barking-dog>
+                </div>
+                <div class="tab-pane fade" id="boy-dog" role="tabpanel" aria-labelledby="tab-boy-dog">
+                    <boy-dog></boy-dog>
+                </div>
+                <div class="tab-pane fade" id="financial-cost" role="tabpanel" aria-labelledby="tab-financial">
+                    <financial-cost></financial-cost>
+                </div>
+                <div class="tab-pane fade" id="team-work" role="tabpanel" aria-labelledby="tab-team-work">
+                    <team-work></team-work>
+                </div>
+                
+                <div class="tab-pane fade" id="black-box" role="tabpanel" aria-labelledby="black-box">
+                    <black-box></black-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <notes></notes>
+        </div>
+    </div>  
+    <script>
+        export default {
+            onBeforeMount(props, state) {
+                this.state = {
+                    student: props.student
+                }
+            }
+        }
+    </script>
+</page-interview>
